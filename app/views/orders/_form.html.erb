@@ -1,0 +1,102 @@
+<%= form_with(model: order) do |form| %>
+  <% if order.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
+
+      <ul>
+        <% order.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :user_id, style: "display: block" %>
+    <%= form.number_field :user_id %>
+  </div>
+
+  <div>
+    <%= form.label :order_number, style: "display: block" %>
+    <%= form.text_field :order_number %>
+  </div>
+
+  <div>
+    <%= form.label :customer_email, style: "display: block" %>
+    <%= form.text_field :customer_email %>
+  </div>
+
+  <div>
+    <%= form.label :customer_name, style: "display: block" %>
+    <%= form.text_field :customer_name %>
+  </div>
+
+  <div>
+    <%= form.label :customer_phone, style: "display: block" %>
+    <%= form.text_field :customer_phone %>
+  </div>
+
+  <div>
+    <%= form.label :shipping_address, style: "display: block" %>
+    <%= form.text_field :shipping_address %>
+  </div>
+
+  <div>
+    <%= form.label :billing_address, style: "display: block" %>
+    <%= form.text_field :billing_address %>
+  </div>
+
+  <div>
+    <%= form.label :subtotal, style: "display: block" %>
+    <%= form.text_field :subtotal %>
+  </div>
+
+  <div>
+    <%= form.label :tax_amount, style: "display: block" %>
+    <%= form.text_field :tax_amount %>
+  </div>
+
+  <div>
+    <%= form.label :shipping_cost, style: "display: block" %>
+    <%= form.text_field :shipping_cost %>
+  </div>
+
+  <div>
+    <%= form.label :total_amount, style: "display: block" %>
+    <%= form.text_field :total_amount %>
+  </div>
+
+  <div>
+    <%= form.label :status, style: "display: block" %>
+    <%= form.text_field :status %>
+  </div>
+
+  <div>
+    <%= form.label :payment_status, style: "display: block" %>
+    <%= form.text_field :payment_status %>
+  </div>
+
+  <div>
+    <%= form.label :payment_method, style: "display: block" %>
+    <%= form.text_field :payment_method %>
+  </div>
+
+  <div>
+    <%= form.label :notes, style: "display: block" %>
+    <%= form.text_field :notes %>
+  </div>
+
+  <div>
+    <%= form.label :order_date, style: "display: block" %>
+    <%= form.datetime_field :order_date %>
+  </div>
+
+  <div>
+    <%= form.label :shipped_date, style: "display: block" %>
+    <%= form.datetime_field :shipped_date %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @stock_movement %>
+
+<div>
+  <%= link_to "Edit this stock movement", edit_stock_movement_path(@stock_movement) %> |
+  <%= link_to "Back to stock movements", stock_movements_path %>
+
+  <%= button_to "Destroy this stock movement", @stock_movement, method: :delete %>
+</div>

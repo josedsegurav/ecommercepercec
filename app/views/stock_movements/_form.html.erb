@@ -1,0 +1,52 @@
+<%= form_with(model: stock_movement) do |form| %>
+  <% if stock_movement.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(stock_movement.errors.count, "error") %> prohibited this stock_movement from being saved:</h2>
+
+      <ul>
+        <% stock_movement.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :product_id, style: "display: block" %>
+    <%= form.number_field :product_id %>
+  </div>
+
+  <div>
+    <%= form.label :movement_type, style: "display: block" %>
+    <%= form.text_field :movement_type %>
+  </div>
+
+  <div>
+    <%= form.label :quantity, style: "display: block" %>
+    <%= form.number_field :quantity %>
+  </div>
+
+  <div>
+    <%= form.label :cost_per_unit, style: "display: block" %>
+    <%= form.text_field :cost_per_unit %>
+  </div>
+
+  <div>
+    <%= form.label :reference_id, style: "display: block" %>
+    <%= form.number_field :reference_id %>
+  </div>
+
+  <div>
+    <%= form.label :notes, style: "display: block" %>
+    <%= form.text_field :notes %>
+  </div>
+
+  <div>
+    <%= form.label :movement_date, style: "display: block" %>
+    <%= form.date_field :movement_date %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
