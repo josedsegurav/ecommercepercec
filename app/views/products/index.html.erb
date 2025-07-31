@@ -1,16 +1,248 @@
 <p style="color: green"><%= notice %></p>
 
 <% content_for :title, "Products" %>
+<!-- Page Header -->
+<section class="page-header d-flex align-items-center" style="background: linear-gradient(135deg, #0D8DC8, #1BACF0); padding: 120px 0 80px; margin-top: 76px;">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <nav aria-label="breadcrumb" class="mb-3">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><%= link_to "Inicio", root_path, class: "text-white-50 text-decoration-none" %></li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">Productos</li>
+                    </ol>
+                </nav>
+                <h1 class="display-4 text-white fw-bold mb-3">Nuestros Productos</h1>
+                <p class="text-white-50 fs-5 mb-0">Descubre nuestra amplia selección de instrumentos de percusión de las mejores marcas del mundo</p>
+            </div>
+            <div class="col-lg-4 text-end">
+                <div class="text-white">
+                    <span class="display-6 fw-bold d-block"><%= @products.count %>+</span>
+                    <small class="opacity-75 fs-6">Productos disponibles</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-<h1>Products</h1>
+<!-- Products Grid -->
+<section class="py-5">
+    <div class="container">
+        <% if @products.any? %>
+            <div class="row g-4">
+                <% @products.each do |product| %>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="product-card card h-100 border-0 shadow-sm">
+                            <div class="product-image position-relative" style="height: 250px; background: linear-gradient(135deg, #f8f9fa, #e9ecef); overflow: hidden;">
+                                <% if product.images.attached? %>
+                                    <%= image_tag product.images.first,
+                                        class: "w-100 h-100",
+                                        style: "object-fit: cover;" %>
+                                <% else %>
+                                    <div class="d-flex align-items-center justify-content-center h-100">
+                                        <i class="fas fa-drum text-primary" style="font-size: 4rem; opacity: 0.3;"></i>
+                                    </div>
+                                <% end %>
 
-<div id="products">
-  <% @products.each do |product| %>
-    <%= render product %>
-    <p>
-      <%= link_to "Show this product", product %>
-    </p>
-  <% end %>
-</div>
+                                <!-- Product badges -->
+                                <div class="position-absolute top-0 start-0 m-3">
+                                    <% if product.stock_quantity <= 5 %>
+                                        <span class="badge bg-warning text-dark mb-1 d-block">Pocas unidades</span>
+                                    <% end %>
+                                    <% if product.created_at > 30.days.ago %>
+                                        <span class="badge bg-success mb-1 d-block">Nuevo</span>
+                                    <% end %>
+                                </div>
 
-<%= link_to "New product", new_product_path %>
+                                <!-- Quick actions -->
+                                <div class="position-absolute top-0 end-0 m-3">
+                                    <div class="d-flex flex-column gap-2">
+                                        <%= link_to product_path(product),
+                                            class: "btn btn-light btn-sm rounded-circle d-flex align-items-center justify-content-center",
+                                            style: "width: 40px; height: 40px;" do %>
+                                            <i class="fas fa-eye"></i>
+                                        <% end %>
+                                        <button class="btn btn-light btn-sm rounded-circle d-flex align-items-center justify-content-center"
+                                                style="width: 40px; height: 40px;"
+                                                onclick="addToWishlist(<%= product.id %>)">
+                                            <i class="fas fa-heart"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-body p-4">
+                                <div class="mb-2">
+                                    <span class="badge bg-light text-primary"><%= product.category.name %></span>
+                                </div>
+                                <h5 class="card-title fw-semibold mb-2">
+                                    <%= link_to product.name, product_path(product),
+                                        class: "text-decoration-none text-dark" %>
+                                </h5>
+                                <p class="card-text text-muted small mb-3">
+                                    <%= truncate(product.description, length: 80) %>
+                                </p>
+
+                                <!-- Price and stock info -->
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div class="h4 text-primary fw-bold mb-0">$<%= product.selling_price %></div>
+                                    <small class="text-muted">
+                                        <i class="fas fa-box me-1"></i>
+                                        <%= product.stock_quantity %> disponibles
+                                    </small>
+                                </div>
+
+                                <!-- Vendor info -->
+                                <% if product.vendor.present? %>
+                                    <div class="small text-muted mb-3">
+                                        <i class="fas fa-store me-1"></i>
+                                        <%= product.vendor.name %>
+                                    </div>
+                                <% end %>
+
+                                <!-- Action buttons -->
+                                <div class="d-grid gap-2">
+                                    <% if product.stock_quantity > 0 %>
+                                        <button class="btn btn-primary rounded-3" onclick="addToCart(<%= product.id %>)">
+                                            <i class="fas fa-cart-plus me-2"></i>Agregar al Carrito
+                                        </button>
+                                    <% else %>
+                                        <button class="btn btn-outline-secondary rounded-3" disabled>
+                                            <i class="fas fa-times me-2"></i>Agotado
+                                        </button>
+                                    <% end %>
+                                    <div class="row g-2">
+                                        <div class="col-6">
+                                            <a href="https://wa.me/593996888655?text=Hola, me interesa el producto: <%= product.name %>"
+                                               class="btn btn-outline-success btn-sm w-100" target="_blank">
+                                                <i class="fab fa-whatsapp me-1"></i>WhatsApp
+                                            </a>
+                                        </div>
+                                        <div class="col-6">
+                                            <%= link_to product_path(product),
+                                                class: "btn btn-outline-primary btn-sm w-100" do %>
+                                                <i class="fas fa-info-circle me-1"></i>Detalles
+                                            <% end %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% end %>
+            </div>
+
+            <!-- Pagination
+
+
+        <% else %>
+            <!-- Empty state -->
+            <div class="text-center py-5">
+                <div class="mb-4">
+                    <i class="fas fa-search text-muted" style="font-size: 4rem; opacity: 0.3;"></i>
+                </div>
+                <h3 class="text-muted mb-3">No se encontraron productos</h3>
+                <p class="text-muted mb-4">
+                    <% if params[:search].present? || params[:category_id].present? %>
+                        Intenta ajustar los filtros de búsqueda
+                    <% else %>
+                        Actualmente no hay productos disponibles
+                    <% end %>
+                </p>
+                <% if params[:search].present? || params[:category_id].present? %>
+                    <%= link_to "Ver todos los productos", products_path,
+                        class: "btn btn-primary" %>
+                <% end %>
+            </div>
+        <% end %>
+    </div>
+</section>
+
+<!-- Quick Contact Section -->
+<section class="bg-light py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h3 class="mb-3">¿No encuentras lo que buscas?</h3>
+                <p class="text-muted mb-4">Contáctanos directamente y te ayudaremos a encontrar el instrumento perfecto para ti</p>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="https://wa.me/593996888655"
+                       class="btn btn-success btn-lg rounded-pill" target="_blank">
+                        <i class="fab fa-whatsapp me-2"></i>WhatsApp
+                    </a>
+                    <a href="mailto:info@percusionecuador.com"
+                       class="btn btn-primary btn-lg rounded-pill">
+                        <i class="fas fa-envelope me-2"></i>Email
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+function addToCart(productId) {
+    // Rails AJAX request to add product to cart
+    fetch('/cart/add', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': document.querySelector('[name="csrf-token"]').content
+        },
+        body: JSON.stringify({
+            product_id: productId,
+            quantity: 1
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Update cart count in navbar
+            updateCartCount();
+            // Show success message
+            showNotification('Producto agregado al carrito', 'success');
+        } else {
+            showNotification('Error al agregar el producto', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showNotification('Error al agregar el producto', 'error');
+    });
+}
+
+function addToWishlist(productId) {
+    // Implementation for wishlist functionality
+    showNotification('Agregado a favoritos', 'success');
+}
+
+function updateCartCount() {
+    // Update cart count in navbar
+    fetch('/cart/count')
+        .then(response => response.json())
+        .then(data => {
+            const cartBadge = document.querySelector('.cart-count');
+            if (cartBadge) {
+                cartBadge.textContent = data.count;
+            }
+        });
+}
+
+function showNotification(message, type) {
+    // Simple notification system
+    const notification = document.createElement('div');
+    notification.className = `alert alert-${type === 'error' ? 'danger' : 'success'} position-fixed`;
+    notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+    notification.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close" onclick="this.parentElement.remove()"></button>
+    `;
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+        if (notification.parentElement) {
+            notification.remove();
+        }
+    }, 3000);
+}
+</script>
