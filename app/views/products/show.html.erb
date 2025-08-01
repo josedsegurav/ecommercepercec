@@ -6,14 +6,14 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item">
-                    <%= link_to "Inicio", root_path, class: "text-decoration-none" %>
+                    <%= link_to "Home", root_path, class: "text-decoration-none" %>
                 </li>
                 <li class="breadcrumb-item">
-                    <%= link_to "Productos", products_path, class: "text-decoration-none" %>
+                    <%= link_to "Products", products_path, class: "text-decoration-none" %>
                 </li>
                 <% if @product.category %>
                     <li class="breadcrumb-item">
-                        <%= link_to @product.category.name, categories_path(@product.category), class: "text-decoration-none" %>
+                        <%= link_to @product.category.name, category_path(@product.category), class: "text-decoration-none" %>
                     </li>
                 <% end %>
                 <li class="breadcrumb-item active" aria-current="page"><%= @product.name %></li>
@@ -41,12 +41,12 @@
                                 <!-- Image badges -->
                                 <div class="position-absolute top-0 start-0 m-3">
                                     <% if @product.quantity <= 5 && @product.quantity > 0 %>
-                                        <span class="badge bg-warning text-dark mb-1 d-block">Pocas unidades</span>
+                                        <span class="badge bg-warning text-dark mb-1 d-block">Few Stock</span>
                                     <% elsif @product.quantity == 0 %>
-                                        <span class="badge bg-danger mb-1 d-block">Agotado</span>
+                                        <span class="badge bg-danger mb-1 d-block">Out of Stock</span>
                                     <% end %>
                                     <% if @product.created_at > 30.days.ago %>
-                                        <span class="badge bg-success">Nuevo</span>
+                                        <span class="badge bg-success">New</span>
                                     <% end %>
                                 </div>
                             </div>
@@ -72,7 +72,7 @@
                         <div class="d-flex align-items-center justify-content-center bg-light rounded-3" style="height: 500px;">
                             <div class="text-center">
                                 <i class="fas fa-drum text-primary mb-3" style="font-size: 6rem; opacity: 0.3;"></i>
-                                <p class="text-muted">Sin imagen disponible</p>
+                                <p class="text-muted">No image available</p>
                             </div>
                         </div>
                     <% end %>
@@ -112,7 +112,7 @@
                         <% else %>
                             <div class="d-flex align-items-center text-danger">
                                 <i class="fas fa-times-circle me-2"></i>
-                                <span class="fw-semibold">Producto agotado</span>
+                                <span class="fw-semibold">Out of Stock</span>
                             </div>
                         <% end %>
                     </div>
@@ -120,7 +120,7 @@
                     <!-- Product Description -->
                     <% if @product.description.present? %>
                         <div class="description mb-4">
-                            <h5 class="fw-semibold mb-3">Descripción</h5>
+                            <h5 class="fw-semibold mb-3">Description</h5>
                             <p class="text-muted lh-lg"><%= simple_format(@product.description) %></p>
                         </div>
                     <% end %>
@@ -129,7 +129,7 @@
                     <% if @product.vendor.present? %>
                         <div class="vendor-info mb-4 p-3 bg-light rounded-3">
                             <h6 class="fw-semibold mb-2">
-                                <i class="fas fa-store me-2 text-primary"></i>Proveedor
+                                <i class="fas fa-store me-2 text-primary"></i>Company/Brand
                             </h6>
                             <p class="mb-0 text-muted"><%= @product.vendor.name %></p>
                         </div>
@@ -140,7 +140,7 @@
                         <!-- Quantity selector -->
                         <% if @product.stock_quantity > 0 %>
                             <div class="quantity-selector mb-4">
-                                <label for="quantity" class="form-label fw-semibold">Cantidad:</label>
+                                <label for="quantity" class="form-label fw-semibold">Quantity:</label>
                                 <div class="input-group" style="max-width: 150px;">
                                     <button class="btn btn-outline-secondary" type="button" onclick="decreaseQuantity()">
                                         <i class="fas fa-minus"></i>
@@ -157,30 +157,27 @@
                         <div class="d-grid gap-3 mb-4">
                             <% if @product.stock_quantity > 0 %>
                                 <button class="btn btn-primary btn-lg rounded-3" onclick="addToCart(<%= @product.id %>)">
-                                    <i class="fas fa-cart-plus me-2"></i>Agregar al Carrito
-                                </button>
-                                <button class="btn btn-outline-primary btn-lg rounded-3">
-                                    <i class="fas fa-bolt me-2"></i>Comprar Ahora
+                                    <i class="fas fa-cart-plus me-2"></i>Add to Cart
                                 </button>
                             <% else %>
                                 <button class="btn btn-secondary btn-lg rounded-3" disabled>
-                                    <i class="fas fa-times me-2"></i>Producto Agotado
+                                    <i class="fas fa-times me-2"></i>Out of Stock
                                 </button>
                             <% end %>
                         </div>
 
                         <!-- Contact Options -->
                         <div class="contact-options">
-                            <h6 class="fw-semibold mb-3">¿Tienes dudas sobre este producto?</h6>
+                            <h6 class="fw-semibold mb-3">Any Questions?</h6>
                             <div class="row g-2">
                                 <div class="col-md-6">
-                                    <a href="https://wa.me/593996888655?text=Hola, tengo una consulta sobre: <%= @product.name %>"
+                                    <a href="https://wa.me/593996888655?text=Hi, I have one question about: <%= @product.name %>"
                                        class="btn btn-success w-100" target="_blank">
                                         <i class="fab fa-whatsapp me-2"></i>WhatsApp
                                     </a>
                                 </div>
                                 <div class="col-md-6">
-                                    <a href="mailto:info@percusionecuador.com?subject=Consulta sobre <%= @product.name %>"
+                                    <a href="mailto:info@percusionecuador.com?subject=Question about <%= @product.name %>"
                                        class="btn btn-outline-primary w-100">
                                         <i class="fas fa-envelope me-2"></i>Email
                                     </a>
@@ -188,12 +185,6 @@
                             </div>
                         </div>
 
-                        <!-- Wishlist -->
-                        <div class="text-center mt-4">
-                            <button class="btn btn-link text-muted" onclick="addToWishlist(<%= @product.id %>)">
-                                <i class="fas fa-heart me-1"></i>Agregar a favoritos
-                            </button>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -209,17 +200,12 @@
                 <ul class="nav nav-tabs nav-fill mb-4" id="productTabs" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active fw-semibold" id="specifications-tab" data-bs-toggle="tab" data-bs-target="#specifications" type="button" role="tab">
-                            <i class="fas fa-list me-2"></i>Especificaciones
+                            <i class="fas fa-list me-2"></i>Specifications
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link fw-semibold" id="shipping-tab" data-bs-toggle="tab" data-bs-target="#shipping" type="button" role="tab">
-                            <i class="fas fa-truck me-2"></i>Envíos
-                        </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link fw-semibold" id="care-tab" data-bs-toggle="tab" data-bs-target="#care" type="button" role="tab">
-                            <i class="fas fa-shield-alt me-2"></i>Cuidados
+                            <i class="fas fa-truck me-2"></i>Delivery
                         </button>
                     </li>
                 </ul>
@@ -229,33 +215,33 @@
                     <div class="tab-pane fade show active" id="specifications" role="tabpanel">
                         <div class="card border-0 shadow-sm">
                             <div class="card-body p-4">
-                                <h5 class="card-title mb-4">Especificaciones del Producto</h5>
+                                <h5 class="card-title mb-4">Specifications of the product</h5>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <table class="table table-borderless">
                                             <tr>
-                                                <td class="fw-semibold text-muted">Nombre:</td>
+                                                <td class="fw-semibold text-muted">Name:</td>
                                                 <td><%= @product.name %></td>
                                             </tr>
                                             <% if @product.category %>
                                                 <tr>
-                                                    <td class="fw-semibold text-muted">Categoría:</td>
+                                                    <td class="fw-semibold text-muted">Category:</td>
                                                     <td><%= @product.category.name %></td>
                                                 </tr>
                                             <% end %>
                                             <% if @product.vendor %>
                                                 <tr>
-                                                    <td class="fw-semibold text-muted">Marca/Proveedor:</td>
+                                                    <td class="fw-semibold text-muted">Company/Brand:</td>
                                                     <td><%= @product.vendor.name %></td>
                                                 </tr>
                                             <% end %>
                                             <tr>
-                                                <td class="fw-semibold text-muted">Disponibilidad:</td>
+                                                <td class="fw-semibold text-muted">Stock:</td>
                                                 <td>
                                                     <% if @product.stock_quantity > 0 %>
-                                                        <span class="badge bg-success">En stock</span>
+                                                        <span class="badge bg-success">In stock</span>
                                                     <% else %>
-                                                        <span class="badge bg-danger">Agotado</span>
+                                                        <span class="badge bg-danger">Out of Stock</span>
                                                     <% end %>
                                                 </td>
                                             </tr>
@@ -263,7 +249,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <% if @product.description.present? %>
-                                            <h6 class="fw-semibold mb-3">Descripción Detallada</h6>
+                                            <h6 class="fw-semibold mb-3">Detailed description</h6>
                                             <p class="text-muted"><%= simple_format(@product.description) %></p>
                                         <% end %>
                                     </div>
@@ -276,52 +262,28 @@
                     <div class="tab-pane fade" id="shipping" role="tabpanel">
                         <div class="card border-0 shadow-sm">
                             <div class="card-body p-4">
-                                <h5 class="card-title mb-4">Información de Envíos</h5>
+                                <h5 class="card-title mb-4">Delivery Information</h5>
                                 <div class="row g-4">
                                     <div class="col-md-4">
                                         <div class="text-center">
                                             <i class="fas fa-truck text-primary mb-3" style="font-size: 2rem;"></i>
-                                            <h6 class="fw-semibold">Envío Nacional</h6>
-                                            <p class="text-muted small">Entrega en todo Ecuador</p>
+                                            <h6 class="fw-semibold">Local Delivery</h6>
+                                            <p class="text-muted small">Ship In Ecuador</p>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="text-center">
                                             <i class="fas fa-clock text-primary mb-3" style="font-size: 2rem;"></i>
-                                            <h6 class="fw-semibold">Tiempo de Entrega</h6>
-                                            <p class="text-muted small">2-5 días hábiles</p>
+                                            <h6 class="fw-semibold">Shipping Time</h6>
+                                            <p class="text-muted small">2-5 business days</p>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="text-center">
                                             <i class="fas fa-shield-alt text-primary mb-3" style="font-size: 2rem;"></i>
-                                            <h6 class="fw-semibold">Envío Seguro</h6>
-                                            <p class="text-muted small">Empaque protegido</p>
+                                            <h6 class="fw-semibold">Safe Delivery</h6>
+                                            <p class="text-muted small">Protected package</p>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Care Instructions Tab -->
-                    <div class="tab-pane fade" id="care" role="tabpanel">
-                        <div class="card border-0 shadow-sm">
-                            <div class="card-body p-4">
-                                <h5 class="card-title mb-4">Cuidados y Mantenimiento</h5>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <h6 class="fw-semibold mb-3">Recomendaciones Generales</h6>
-                                        <ul class="list-unstyled">
-                                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Mantener en lugar seco</li>
-                                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Evitar temperaturas extremas</li>
-                                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Limpiar regularmente</li>
-                                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Almacenar adecuadamente</li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <h6 class="fw-semibold mb-3">Garantía</h6>
-                                        <p class="text-muted">Todos nuestros productos cuentan con garantía del fabricante. Para más información sobre garantías específicas, contáctanos directamente.</p>
                                     </div>
                                 </div>
                             </div>
@@ -337,7 +299,7 @@
 <% if @related_products&.any? %>
     <section class="py-5">
         <div class="container">
-            <h3 class="text-center mb-5">Productos Relacionados</h3>
+            <h3 class="text-center mb-5">Related Products</h3>
             <div class="row g-4">
                 <% @related_products.limit(4).each do |product| %>
                     <div class="col-lg-3 col-md-6">
@@ -359,7 +321,7 @@
                                 </h6>
                                 <div class="h6 text-primary fw-bold">$<%= product.selling_price %></div>
                                 <div class="d-grid">
-                                    <%= link_to "Ver Producto", product_path(product), class: "btn btn-outline-primary btn-sm" %>
+                                    <%= link_to "See Product", product_path(product), class: "btn btn-outline-primary btn-sm" %>
                                 </div>
                             </div>
                         </div>
@@ -401,102 +363,4 @@ function decreaseQuantity() {
         quantityInput.value = currentValue - 1;
     }
 }
-
-// Add to cart functionality
-function addToCart(productId) {
-    const quantity = document.getElementById('quantity') ? parseInt(document.getElementById('quantity').value) : 1;
-
-    fetch('/cart/add', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-Token': document.querySelector('[name="csrf-token"]').content
-        },
-        body: JSON.stringify({
-            product_id: productId,
-            quantity: quantity
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            updateCartCount();
-            showNotification('Producto agregado al carrito', 'success');
-        } else {
-            showNotification('Error al agregar el producto', 'error');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        showNotification('Error al agregar el producto', 'error');
-    });
-}
-
-// Wishlist functionality
-function addToWishlist(productId) {
-    showNotification('Producto agregado a favoritos', 'success');
-}
-
-// Notification system
-function showNotification(message, type) {
-    const notification = document.createElement('div');
-    notification.className = `alert alert-${type === 'error' ? 'danger' : 'success'} position-fixed`;
-    notification.style.cssText = 'top: 100px; right: 20px; z-index: 9999; min-width: 300px;';
-    notification.innerHTML = `
-        ${message}
-        <button type="button" class="btn-close" onclick="this.parentElement.remove()"></button>
-    `;
-    document.body.appendChild(notification);
-
-    setTimeout(() => {
-        if (notification.parentElement) {
-            notification.remove();
-        }
-    }, 3000);
-}
-
-// Update cart count
-function updateCartCount() {
-    fetch('/cart/count')
-        .then(response => response.json())
-        .then(data => {
-            const cartBadge = document.querySelector('.cart-count');
-            if (cartBadge) {
-                cartBadge.textContent = data.count;
-            }
-        });
-}
 </script>
-
-<style>
-.thumbnail-image.active {
-    border: 2px solid var(--bs-primary) !important;
-}
-
-.product-images .main-image img:hover {
-    transform: scale(1.05);
-    transition: transform 0.3s ease;
-}
-
-.nav-tabs .nav-link {
-    border: none;
-    border-bottom: 3px solid transparent;
-    color: #6c757d;
-}
-
-.nav-tabs .nav-link.active {
-    border-bottom-color: var(--bs-primary);
-    color: var(--bs-primary);
-    background: none;
-}
-
-.price-section .h2 {
-    font-size: 2.5rem;
-}
-
-@media (max-width: 768px) {
-    .price-section .h2 {
-        font-size: 2rem;
-    }
-}
-</style>

@@ -1,7 +1,5 @@
 
 <body>
-
-
     <!-- Hero Section -->
     <section class="hero-section d-flex align-items-center" id="inicio">
         <div class="container">
@@ -20,23 +18,17 @@
                             <div class="col-4">
                                 <div class="stat-item">
                                     <span class="display-4 fw-bold d-block"><%= @product_count %>+</span>
-                                    <small class="opacity-75">Productos disponibles</small>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="stat-item">
-                                    <span class="display-4 fw-bold d-block">1000+</span>
-                                    <small class="opacity-75">Músicos satisfechos</small>
+                                    <small class="opacity-75">Available Products</small>
                                 </div>
                             </div>
                         </div>
 
                         <div class="hero-buttons">
                             <a href="#productos" class="btn btn-primary btn-lg me-3 mb-2">
-                                <i class="fas fa-shopping-bag me-2"></i>Ver Catálogo
+                                <i class="fas fa-shopping-bag me-2"></i>See Products
                             </a>
                             <a href="https://wa.me/593996888655" class="btn btn-outline-primary btn-lg">
-                                <i class="fab fa-whatsapp me-2"></i>Consultar WhatsApp
+                                <i class="fab fa-whatsapp me-2"></i>WhatsApp Message
                             </a>
                         </div>
                     </div>
@@ -47,8 +39,8 @@
                         <div class="instrument-icon d-flex align-items-center justify-content-center mx-auto mb-3">
                             <i class="fas fa-drum"></i>
                         </div>
-                        <h3 class="text-white fw-semibold mb-3">Instrumentos Premium</h3>
-                        <p class="text-white-50 mb-0">Calidad garantizada desde 2010. Importamos directamente de las mejores marcas mundiales.</p>
+                        <h3 class="text-white fw-semibold mb-3">Premium Products</h3>
+                        <p class="text-white-50 mb-0">We Import from renowned international brands.</p>
                     </div>
                 </div>
             </div>
@@ -58,8 +50,8 @@
     <!-- Categories Section -->
     <section class="py-5" id="categorias" style="padding: 100px 0;">
         <div class="container">
-            <h2 class="section-title text-center position-relative mb-3">Nuestras Categorías</h2>
-            <p class="text-center text-muted fs-5 mb-5">Encuentra exactamente lo que necesitas para tu estilo musical</p>
+            <h2 class="section-title text-center position-relative mb-3">Categories</h2>
+            <p class="text-center text-muted fs-5 mb-5">Find exactly what you need.</p>
 
             <div class="row g-4">
             <% @categories.each do |category| %>
@@ -69,9 +61,9 @@
                                 <i class="fas fa-drum"></i>
                             </div>
                             <h4 class="h5 fw-semibold mb-3"><%= category.name %> </h4>
-                            <p class="text-muted mb-3">Kits completos, platillos, baquetas y accesorios para bateristas de todos los niveles.</p>
+                            <p class="text-muted mb-3"><%= category.description %></p>
                             <a href="#" class="text-primary text-decoration-none fw-semibold">
-                                Ver productos <i class="fas fa-arrow-right ms-1"></i>
+                                Browse products <i class="fas fa-arrow-right ms-1"></i>
                             </a>
                         </div>
                     </div>
@@ -83,8 +75,8 @@
     <!-- Featured Products -->
     <section class="bg-light" id="productos" style="padding: 100px 0;">
         <div class="container">
-            <h2 class="section-title text-center position-relative mb-3">Productos Destacados</h2>
-            <p class="text-center text-muted fs-5 mb-5">Los más vendidos y recomendados por nuestros clientes</p>
+            <h2 class="section-title text-center position-relative mb-3">Featured Products</h2>
+            <p class="text-center text-muted fs-5 mb-5">Bestsellers and recommended</p>
 
             <div class="row g-4">
                 <div class="col-lg-4 col-md-6">
@@ -107,7 +99,7 @@
                             <p class="card-text text-muted"><%= @low_quantity_products.description %></p>
                             <div class="h4 text-primary fw-bold mb-3">$<%= @low_quantity_products.selling_price %></div>
                             <button class="btn btn-primary w-100 rounded-3">
-                                <i class="fas fa-cart-plus me-2"></i>Agregar al Carrito
+                                <i class="fas fa-cart-plus me-2"></i>Add to Cart
                             </button>
                         </div>
                     </div>
@@ -133,7 +125,7 @@
                             <p class="card-text text-muted"><%= @latest_product.description %></p>
                             <div class="h4 text-primary fw-bold mb-3">$<%= @latest_product.selling_price %></div>
                             <button class="btn btn-primary w-100 rounded-3">
-                                <i class="fas fa-cart-plus me-2"></i>Agregar al Carrito
+                                <i class="fas fa-cart-plus me-2"></i>Add to Cart
                             </button>
                         </div>
                     </div>
@@ -159,7 +151,7 @@
                             <p class="card-text text-muted"><%= @high_quantity_products.description %></p>
                             <div class="h4 text-primary fw-bold mb-3">$<%= @high_quantity_products.selling_price %></div>
                             <button class="btn btn-primary w-100 rounded-3">
-                                <i class="fas fa-cart-plus me-2"></i>Agregar al Carrito
+                                <i class="fas fa-cart-plus me-2"></i>Add to Cart
                             </button>
                         </div>
                     </div>
@@ -168,7 +160,7 @@
 
             <div class="text-center mt-5">
                 <a href="#" class="btn btn-outline-primary btn-lg">
-                    Ver Todos los Productos <i class="fas fa-arrow-right ms-2"></i>
+                    Browse All Productos <i class="fas fa-arrow-right ms-2"></i>
                 </a>
             </div>
         </div>
@@ -212,7 +204,7 @@
     <!-- Contact Section -->
     <section class="bg-light" id="contacto" style="padding: 100px 0;">
         <div class="container">
-            <h2 class="section-title text-center position-relative mb-3">Contáctanos</h2>
+            <h2 class="section-title text-center position-relative mb-3">Contact Us</h2>
             <p class="text-center text-muted fs-5 mb-5">Múltiples canales para brindarte la mejor atención</p>
 
             <div class="row g-4 mb-5">
@@ -223,7 +215,7 @@
                             <i class="fab fa-whatsapp text-white fs-2"></i>
                         </div>
                         <h4 class="mb-3">WhatsApp Business</h4>
-                        <p class="text-muted mb-4">Respuesta inmediata para consultas y ventas</p>
+                        <p class="text-muted mb-4">Quick response to all requirements</p>
                         <a href="https://wa.me/593996888655" class="btn btn-success rounded-pill">
                             <i class="fab fa-whatsapp me-2"></i>Chatear Ahora
                         </a>
@@ -237,9 +229,9 @@
                             <i class="fas fa-envelope text-white fs-2"></i>
                         </div>
                         <h4 class="mb-3">Email</h4>
-                        <p class="text-muted mb-4">Para consultas detalladas y cotizaciones</p>
+                        <p class="text-muted mb-4">Detailed inquiries and quotes.</p>
                         <a href="mailto:info@percusionecuador.com" class="btn btn-primary rounded-pill">
-                            <i class="fas fa-envelope me-2"></i>Escribir Email
+                            <i class="fas fa-envelope me-2"></i>Send Email
                         </a>
                     </div>
                 </div>
@@ -250,8 +242,8 @@
                              style="width: 80px; height: 80px; background: linear-gradient(135deg, #1877F2, #42A5F5);">
                             <i class="fab fa-facebook-messenger text-white fs-2"></i>
                         </div>
-                        <h4 class="mb-3">Redes Sociales</h4>
-                        <p class="text-muted mb-4">Síguenos para ofertas y novedades</p>
+                        <h4 class="mb-3">Social Media</h4>
+                        <p class="text-muted mb-4">Follow Us</p>
                         <div class="d-flex justify-content-center gap-2">
                             <a href="https://www.facebook.com/percusionecuador" class="btn btn-outline-primary rounded-pill">
                                 <i class="fab fa-facebook-f"></i>
@@ -264,78 +256,7 @@
                 </div>
             </div>
 
-            <!-- Quick Contact Form -->
-            <!-- <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="card p-5 border-0 shadow">
-                        <h3 class="text-center mb-4">Consulta Rápida</h3>
-                        <form>
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="nombre" placeholder="Tu nombre">
-                                        <label for="nombre">Nombre completo</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input type="email" class="form-control" id="email" placeholder="tu@email.com">
-                                        <label for="email">Email</label>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-floating">
-                                        <select class="form-select" id="categoria">
-                                            <option selected disabled>Selecciona una categoría</option>
-                                            <option value="baterias">Baterías</option>
-                                            <option value="clasica">Percusión Clásica</option>
-                                            <option value="corporal">Percusión Corporal</option>
-                                            <option value="accesorios">Accesorios</option>
-                                            <option value="otro">Otro</option>
-                                        </select>
-                                        <label for="categoria">¿Qué te interesa?</label>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-floating">
-                                        <textarea class="form-control" id="mensaje" placeholder="Tu mensaje" style="height: 120px;"></textarea>
-                                        <label for="mensaje">Mensaje</label>
-                                    </div>
-                                </div>
-                                <div class="col-12 text-center">
-                                    <button type="submit" class="btn btn-primary btn-lg rounded-pill px-5">
-                                        <i class="fas fa-paper-plane me-2"></i>Enviar Consulta
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div> -->
         </div>
     </section>
-
-    <!-- Newsletter Section
-    <section style="padding: 80px 0; background: linear-gradient(135deg, #0D8DC8, #1BACF0);">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6">
-                    <h3 class="text-white display-6 mb-3">¡No te pierdas nada!</h3>
-                    <p class="text-white-50 fs-5 mb-0">Suscríbete a nuestro newsletter y recibe ofertas exclusivas, nuevos productos y tips musicales.</p>
-                </div>
-                <div class="col-lg-6">
-                    <form class="d-flex gap-3 mt-4 mt-lg-0">
-                        <input type="email" class="form-control form-control-lg rounded-pill border-0 flex-fill" placeholder="tu@email.com">
-                        <button type="submit" class="btn btn-light btn-lg rounded-pill px-4 fw-semibold">
-                            <i class="fas fa-envelope me-2"></i>Suscribirse
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section> -->
-
-
-
 
 </body>
