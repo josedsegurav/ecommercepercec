@@ -32,6 +32,8 @@ gem 'sassc-rails', '>= 2.1.0'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
+gem 'kaminari'
+gem 'bootstrap5-kaminari-views'
 
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
 gem "solid_cache"

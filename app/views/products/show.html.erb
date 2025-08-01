@@ -29,20 +29,20 @@
             <!-- Product Images -->
             <div class="col-lg-6">
                 <div class="product-images">
-                    <% if @product.images.attached? %>
+                    <% if @product.image.attached? %>
                         <!-- Main Image -->
                         <div class="main-image mb-3">
                             <div class="position-relative" style="height: 500px; background: #f8f9fa; border-radius: 15px; overflow: hidden;">
-                                <%= image_tag @product.images.first,
+                                <%= image_tag @product.image,
                                     id: "mainProductImage",
                                     class: "w-100 h-100",
-                                    style: "object-fit: cover; cursor: zoom-in;" %>
+                                    style: "object-fit: contain; cursor: zoom-in;" %>
 
                                 <!-- Image badges -->
                                 <div class="position-absolute top-0 start-0 m-3">
-                                    <% if @product.quantity <= 5 && @product.quantity > 0 %>
+                                    <% if @product.stock_quantity <= 5 && @product.stock_quantity > 0 %>
                                         <span class="badge bg-warning text-dark mb-1 d-block">Few Stock</span>
-                                    <% elsif @product.quantity == 0 %>
+                                    <% elsif @product.stock_quantity == 0 %>
                                         <span class="badge bg-danger mb-1 d-block">Out of Stock</span>
                                     <% end %>
                                     <% if @product.created_at > 30.days.ago %>
@@ -51,22 +51,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Thumbnail Images -->
-                        <% if @product.images.count > 1 %>
-                            <div class="thumbnails">
-                                <div class="row g-2">
-                                    <% @product.images.each_with_index do |image, index| %>
-                                        <div class="col-3">
-                                            <%= image_tag image,
-                                                class: "img-thumbnail w-100 thumbnail-image #{'active' if index == 0}",
-                                                style: "height: 80px; object-fit: cover; cursor: pointer;",
-                                                onclick: "changeMainImage('#{url_for(image)}', this)" %>
-                                        </div>
-                                    <% end %>
-                                </div>
-                            </div>
-                        <% end %>
                     <% else %>
                         <!-- Placeholder Image -->
                         <div class="d-flex align-items-center justify-content-center bg-light rounded-3" style="height: 500px;">
@@ -305,8 +289,8 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="card h-100 border-0 shadow-sm">
                             <div class="product-image position-relative" style="height: 200px; background: #f8f9fa;">
-                                <% if product.images.attached? %>
-                                    <%= image_tag product.images.first,
+                                <% if product.image.attached? %>
+                                    <%= image_tag product.images,
                                         class: "w-100 h-100",
                                         style: "object-fit: cover;" %>
                                 <% else %>

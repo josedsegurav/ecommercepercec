@@ -1,7 +1,7 @@
 class ProductsController < InheritedResources::Base
 
   def index
-    @products = Product.includes(:category, :vendor, images_attachments: :blob)
+    @products = Product.includes(:category, :vendor)
     @categories = Category.all
     @vendors = Vendor.all
 
@@ -18,8 +18,13 @@ class ProductsController < InheritedResources::Base
     # Apply sorting
     @products = apply_sorting(@products, params[:sort_by])
 
-    # Pagination (if using Kaminari gem)
-    @products = @products.page(params[:page]).per(12) if respond_to?(:page)
+    # Store total count before pagination
+    @total_products = @products.count
+
+    # Apply pagination with dynamic per_page
+    per_page = params[:per_page]&.to_i || 12
+    per_page = 12 unless [12, 24, 48].include?(per_page) # Security: only allow specific values
+    @products = @products.page(params[:page]).per(per_page)
 
     # Store current filters for maintaining state
     @current_filters = {
@@ -39,7 +44,7 @@ class ProductsController < InheritedResources::Base
 
     @related_products = Product.where(category: @product.category)
                               .where.not(id: @product.id)
-                              .includes(:category, :vendor, images_attachments: :blob)
+                              .includes(:category, :vendor)
                               .limit(4)
   end
 

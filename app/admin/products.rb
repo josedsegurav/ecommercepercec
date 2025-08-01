@@ -29,7 +29,7 @@ ActiveAdmin.register Product do
     selectable_column
     id_column
     column :image do |product|
-      if product.images.present?
+      if product.image.present?
         image_tag product.image, style: "width: 50px; height: 50px; object-fit: cover;"
       else
         "No image"
@@ -50,7 +50,7 @@ ActiveAdmin.register Product do
     attributes_table do
       row :id
       row :image do |product|
-        if product.images.present?
+        if product.image.present?
           image_tag product.image, style: "max-width: 300px; height: auto;"
         else
           "No image uploaded"

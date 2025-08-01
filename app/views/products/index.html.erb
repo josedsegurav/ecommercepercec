@@ -17,7 +17,7 @@
             </div>
             <div class="col-lg-4 text-end">
                 <div class="text-white">
-                    <span class="display-6 fw-bold d-block"><%= @products.count %>+</span>
+                    <span class="display-6 fw-bold d-block"><%= @total_products %></span>
                     <small class="opacity-75 fs-6">Available Products</small>
                 </div>
             </div>
@@ -69,8 +69,8 @@
                     <div class="col-lg-4 col-md-6">
                         <div class="product-card card h-100 border-0 shadow-sm">
                             <div class="product-image position-relative" style="height: 250px; background: linear-gradient(135deg, #f8f9fa, #e9ecef); overflow: hidden;">
-                                <% if product.images.attached? %>
-                                    <%= image_tag product.images.first,
+                                <% if product.image.attached? %>
+                                    <%= image_tag product.image,
                                         class: "w-100 h-100",
                                         style: "object-fit: cover;" %>
                                 <% else %>
@@ -162,7 +162,70 @@
                 <% end %>
             </div>
 
-            <!-- Pagination
+            <!-- Pagination Controls -->
+            <div class="row mt-5">
+                <div class="col-12">
+                    <!-- Pagination Info -->
+                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
+                        <div class="pagination-info mb-3 mb-md-0">
+                            <p class="text-muted mb-0">
+                                Página <%= @products.current_page %> de <%= @products.total_pages %>
+                                (<%= @total_products %> productos en total)
+                            </p>
+                        </div>
+
+                        <!-- Jump to page -->
+                        <% if @products.total_pages > 10 %>
+                            <%= form_with url: products_path, method: :get, local: true, class: "d-flex align-items-center gap-2" do |f| %>
+                                <%= f.hidden_field :search, value: params[:search] %>
+                                <%= f.hidden_field :category_id, value: params[:category_id] %>
+                                <%= f.hidden_field :sort_by, value: params[:sort_by] %>
+                                <%= f.hidden_field :per_page, value: params[:per_page] %>
+                                <small class="text-muted">Ir a página:</small>
+                                <%= f.number_field :page,
+                                    value: @products.current_page,
+                                    min: 1,
+                                    max: @products.total_pages,
+                                    class: "form-control form-control-sm text-center",
+                                    style: "width: 80px;" %>
+                                <%= f.submit "Ir", class: "btn btn-outline-primary btn-sm" %>
+                            <% end %>
+                        <% end %>
+                    </div>
+
+                    <!-- Main Pagination -->
+                    <div class="d-flex justify-content-center">
+                        <%= paginate @products,
+                            theme: 'bootstrap-5',
+                            pagination_class: "pagination justify-content-center",
+                            nav_class: "d-flex justify-content-center",
+                            params: {
+                                search: params[:search],
+                                category_id: params[:category_id],
+                                sort_by: params[:sort_by],
+                                per_page: params[:per_page]
+                            } %>
+                    </div>
+
+                    <!-- Additional Pagination Info for Mobile -->
+                    <div class="d-md-none text-center mt-3">
+                        <% if @products.prev_page %>
+                            <%= link_to products_path(page: @products.prev_page, search: params[:search], category_id: params[:category_id], sort_by: params[:sort_by], per_page: params[:per_page]),
+                                class: "btn btn-outline-primary btn-sm me-2" do %>
+                                <i class="fas fa-chevron-left me-1"></i>Anterior
+                            <% end %>
+                        <% end %>
+                        <span class="text-muted small">
+                            <%= @products.current_page %> / <%= @products.total_pages %>
+                        </span>
+                        <% if @products.next_page %>
+                            <%= link_to products_path(page: @products.next_page, search: params[:search], category_id: params[:category_id], sort_by: params[:sort_by], per_page: params[:per_page]),
+                                class: "btn btn-outline-primary btn-sm ms-2" do %>
+                                Siguiente<i class="fas fa-chevron-right ms-1"></i>
+                            <% end %>
+                        <% end %>
+                    </div>
+                </div>
 
 
         <% else %>
