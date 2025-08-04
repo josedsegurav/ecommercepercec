@@ -10,6 +10,10 @@ class ProductsController < InheritedResources::Base
     @low_quantity_products = Product.where("stock_quantity <= ?", 10).first
     @latest_product = Product.order(created_at: :desc).first
 
+    if params[:category_id].present?
+      @products = @products.where(category_id: params[:category_id])
+    end
+
     # Apply search filter
     if params[:search].present?
       @products = apply_search_filter(@products, params[:search])
