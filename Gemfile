@@ -73,3 +73,7 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem "react-rails", "~> 3.2"
+
+gem "jsbundling-rails", "~> 1.3"

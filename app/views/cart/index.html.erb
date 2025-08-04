@@ -1,0 +1,71 @@
+
+    <!-- Cart Header Section -->
+    <section class="bg-light" style="padding: 60px 0 40px 0; margin-top: 76px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/" class="text-decoration-none">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Shopping Cart</li>
+                        </ol>
+                    </nav>
+                    <h1 class="section-title position-relative mb-3">Your Cart</h1>
+                    <p class="text-muted fs-5">Review your selected percussion instruments</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Content Section -->
+    <section class="bg-white" style="padding: 60px 0;">
+
+                    <!-- Cart Items -->
+                <div class="container" id="cart" data-items='<%= @cart_items.to_json.html_safe %>'></div>
+
+    </section>
+
+    <!-- Trust Badges Section -->
+    <section class="bg-light" style="padding: 40px 0;">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                    <div class="trust-badge">
+                        <div class="trust-icon mb-3">
+                            <i class="fas fa-shipping-fast text-primary" style="font-size: 2.5rem;"></i>
+                        </div>
+                        <h5 class="fw-semibold">Free Shipping</h5>
+                        <p class="text-muted mb-0">On orders over $50</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                    <div class="trust-badge">
+                        <div class="trust-icon mb-3">
+                            <i class="fas fa-shield-alt text-primary" style="font-size: 2.5rem;"></i>
+                        </div>
+                        <h5 class="fw-semibold">Secure Payment</h5>
+                        <p class="text-muted mb-0">Safe & encrypted</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                    <div class="trust-badge">
+                        <div class="trust-icon mb-3">
+                            <i class="fas fa-headset text-primary" style="font-size: 2.5rem;"></i>
+                        </div>
+                        <h5 class="fw-semibold">Expert Support</h5>
+                        <p class="text-muted mb-0">14+ years experience</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="trust-badge">
+                        <div class="trust-icon mb-3">
+                            <i class="fas fa-medal text-primary" style="font-size: 2.5rem;"></i>
+                        </div>
+                        <h5 class="fw-semibold">Premium Quality</h5>
+                        <p class="text-muted mb-0">International brands</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+

@@ -1,5 +1,11 @@
 class OrdersController < InheritedResources::Base
+  def show
+    @order = Order.find(params[:id])
 
+    if @order.guest_order? && session[:last_order_id] != @order.id
+      redirect_to root_path, alert: "Order not found"
+    end
+  end
   private
 
     def order_params

@@ -7,6 +7,14 @@ Rails.application.routes.draw do
   resources :categories
   resources :users
   resources :home
+  resources :cart, only: [:index] do
+    post 'add/:product_id', to: 'cart#add', as: 'add', on: :collection
+    post 'checkout', to: 'cart#checkout', on: :collection
+    patch 'update_item', to: 'cart#update_item', on: :collection
+    delete 'remove_item', to: 'cart#remove_item', on: :collection
+    delete 'clear', to: 'cart#clear', on: :collection
+
+  end
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
