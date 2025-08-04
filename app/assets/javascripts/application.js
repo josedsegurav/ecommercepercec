@@ -1,6 +1,6 @@
 // app/assets/javascripts/application.js
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
 
     // Smooth scrolling for navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Navbar background change on scroll
-    window.addEventListener('scroll', function() {
+    window.addEventListener('scroll', function () {
         const navbar = document.querySelector('.navbar');
         if (window.scrollY > 100) {
             navbar.style.background = 'rgba(255, 255, 255, 0.98)';
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.btn-primary').forEach(button => {
         // Only apply to "Agregar al Carrito" buttons
         if (button.textContent.includes('Agregar al Carrito')) {
-            button.addEventListener('click', function(e) {
+            button.addEventListener('click', function (e) {
                 e.preventDefault();
 
                 // Animate button
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Contact form submission (demo)
     const contactForm = document.querySelector('#contacto form');
     if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
+        contactForm.addEventListener('submit', function (e) {
             e.preventDefault();
 
             const submitBtn = this.querySelector('button[type="submit"]');
@@ -104,5 +104,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 }, 3000);
             }, 2000);
         });
+    }
+
+    // Quantity controls
+    function changeQuantity(inputId, change) {
+        const input = document.getElementById(inputId);
+        let currentValue = parseInt(input.value);
+        const maxValue = parseInt(input.max);
+        const minValue = parseInt(input.min) || 1;
+
+        const newValue = currentValue + change;
+
+        if (newValue >= minValue && newValue <= maxValue) {
+            input.value = newValue;
+        }
     }
 });
