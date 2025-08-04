@@ -40,8 +40,24 @@
                     <%= f.submit "Search", class: "btn btn-primary btn-lg px-4" %>
                 <% end %>
             </div>
+
             <div class="col-lg-6">
                 <div class="d-flex gap-3 justify-content-lg-end mt-3 mt-lg-0">
+
+                <!-- Category Filter Dropdown -->
+                    <%= form_with url: products_path, method: :get, local: true, class: "d-flex gap-2 align-items-center" do |f| %>
+                        <%= f.hidden_field :search, value: params[:search] %>
+                        <%= f.hidden_field :sort_by, value: params[:sort_by] %>
+
+                        <%= f.select :category_id,
+                            options_for_select(
+                                [["All Categories", nil]] + @categories.map { |c| [c.name, c.id] },
+                                params[:category_id]
+                            ),
+                            {},
+                            { class: "form-select" } %>
+                    <% end %>
+
                     <%= form_with url: products_path, method: :get, local: true, class: "d-flex gap-2 align-items-center" do |f| %>
                         <%= f.hidden_field :search, value: params[:search] %>
                         <%= f.select :sort_by,
