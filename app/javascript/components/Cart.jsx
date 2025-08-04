@@ -152,10 +152,10 @@ const Cart = ({ items }) => {
 ${shippingAddress}
 
 *Items:*
-${cartItems.map(item => `• ${item.product.name} x${item.quantity} - $${item.total.toFixed(2)}`).join('\n')}
+${cartItems.map(item => `• ${item.product.name} x${item.quantity} - $${parseFloat(item.total).toFixed(2)}`).join('\n')}
 
 *Order Summary:*
-Subtotal: $${subtotal.toFixed(2)}
+Subtotal: $${subTotal.toFixed(2)}
 Shipping: ${getShippingCost() === 0 ? 'Free' : `$${getShippingCost().toFixed(2)}`}
 Tax: $${getTaxAmount().toFixed(2)}
 *Total: $${getTotalAmount().toFixed(2)}*
@@ -188,105 +188,122 @@ ${notes ? `*Notes:* ${notes}` : ''}
     console.log("Rendering Cart component with items:", cartItems);
     return (
         cartItems.length !== 0 ? (
-            <div className="row">
-                <div className="col-lg-8">
-                    <div className="card border-0 shadow-sm mb-4">
-                        <div className="card-header bg-white border-bottom">
-                            <h4 className="mb-0 fw-semibold">Cart Items ({items.length})</h4>
-                        </div>
-                        <div className="card-body p-0">
-                            {cartItems.map(item => (
-                                <div className="cart-item p-4" key={item.product.id}>
-                                    <div className="row align-items-center">
-                                        <div className="col-md-2">
-                                            <div className="product-image d-flex align-items-center justify-content-center" style={{ height: "80px", backgroundColor: "#f8f9fa", borderRadius: "8px" }}>
-                                                {item.image_url ? (
-                                                    <img
-                                                        src={item.image_url}
-                                                        alt={item.product.name}
-                                                        className="img-fluid rounded"
-                                                    />
-                                                ) : (
-                                                    <i className="fas fa-drum text-primary" style={{ fontSize: "2rem", opacity: 0.3 }}></i>
-                                                )}
+            <div className="container py-5">
+                <div className="row g-4">
+                    {/* Cart Items Section */}
+                    <div className="col-lg-8">
+                        <div className="card border-0 shadow-sm">
+                            <div className="card-header bg-white border-bottom py-3">
+                                <h4 className="mb-0 fw-semibold">Cart Items ({items.length})</h4>
+                            </div>
+                            <div className="card-body p-0">
+                                {cartItems.map(item => (
+                                    <div className="cart-item p-4 border-bottom" key={item.product.id}>
+                                        <div className="row align-items-center">
+                                            <div className="col-md-2 mb-3 mb-md-0">
+                                                <div className="product-image d-flex align-items-center justify-content-center bg-light rounded" style={{ height: "100px" }}>
+                                                    {item.image_url ? (
+                                                        <img
+                                                            src={item.image_url}
+                                                            alt={item.product.name}
+                                                            className="img-fluid rounded"
+                                                            style={{ maxHeight: "100%" }}
+                                                        />
+                                                    ) : (
+                                                        <i className="fas fa-drum text-primary" style={{ fontSize: "2rem", opacity: 0.3 }}></i>
+                                                    )}
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div className="col-md-4">
-                                            <h5 className="fw-semibold mb-1">{item.product.name}</h5>
-                                            <p className="text-muted mb-1 small">{item.product.description.slice(0, 60)} ...</p>
-                                            <div className="text-primary fw-bold">${item.product.selling_price}</div>
-                                        </div>
-                                        <div className="col-md-3">
-                                            <div className="quantity-selector mb-4">
-                                                <label htmlFor="quantity_${item.product.id}" className="form-label fw-semibold">Quantity:</label>
-                                                <div className="input-group" style={{ maxWidth: 150 + 'px' }}>
-                                                    <button className="btn btn-outline-secondary" onClick={() => updateQuantity(item.product.id, -1)}><i className="fas fa-minus"></i></button>
-                                                    <input id="quantity_${item.product.id}" type="number" className="form-control text-center" onChange={
-                                                        (e) => {
+                                            <div className="col-md-5">
+                                                <h5 className="fw-semibold mb-1">{item.product.name}</h5>
+                                                <p className="text-muted mb-2 small">{item.product.description.slice(0, 80)}...</p>
+                                                <div className="text-primary fw-bold">${item.product.selling_price}</div>
+                                            </div>
+                                            <div className="col-md-3">
+                                                <label htmlFor={`quantity_${item.product.id}`} className="form-label fw-semibold">Quantity:</label>
+                                                <div className="input-group" style={{ maxWidth: "150px" }}>
+                                                    <button className="btn btn-outline-secondary" onClick={() => updateQuantity(item.product.id, -1)}>
+                                                        <i className="fas fa-minus"></i>
+                                                    </button>
+                                                    <input
+                                                        id={`quantity_${item.product.id}`}
+                                                        type="number"
+                                                        className="form-control text-center"
+                                                        onChange={(e) => {
                                                             const newValue = parseInt(e.target.value, 10);
                                                             if (!isNaN(newValue) && newValue > 0) {
                                                                 updateQuantity(item.product.id, newValue - item.quantity);
                                                             }
-                                                        }
-                                                    } min="1" max={item.product.stock} value={item.quantity
-                                                    } ></input>
-                                                    <button className="btn btn-outline-secondary" onClick={() => updateQuantity(item.product.id, 1)}><i className="fas fa-plus"></i></button>
+                                                        }}
+                                                        min="1"
+                                                        max={item.product.stock}
+                                                        value={item.quantity}
+                                                    />
+                                                    <button className="btn btn-outline-secondary" onClick={() => updateQuantity(item.product.id, 1)}>
+                                                        <i className="fas fa-plus"></i>
+                                                    </button>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div className="col-md-2 text-end">
-                                            <div className="h5 text-primary fw-bold mb-2">$ {(item.quantity * item.product.selling_price).toFixed(2)}</div>
-                                            <button className="btn btn-outline-danger btn-sm" onClick={() => removeItem(item.product.id)}>
-                                                <i className="fas fa-trash"></i>
-                                            </button>
+                                            <div className="col-md-2 text-end">
+                                                <div className="h5 text-primary fw-bold mb-2">${(item.quantity * item.product.selling_price).toFixed(2)}</div>
+                                                <button className="btn btn-outline-danger btn-sm" onClick={() => removeItem(item.product.id)}>
+                                                    <i className="fas fa-trash"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
+                                ))}
+                            </div>
+                            <div className="card-footer bg-white border-top p-4">
+                                <div className="d-flex justify-content-between align-items-center">
+                                    <a href="/products" className="btn btn-outline-primary me-2">
+                                        <i className="fas fa-arrow-left me-2"></i>Continue Shopping
+                                    </a>
+                                    <button type="button" className="btn btn-outline-secondary" onClick={clearCart}>
+                                        <i className="fas fa-trash me-2"></i>Clear Cart
+                                    </button>
                                 </div>
-                            ))}
-                        </div>
-                        {/* Continue Shopping and Clear Cart */}
-                        <div className="d-flex justify-content-between align-items-center mt-3">
-                            <a href="/products" className="btn btn-outline-primary">
-                                <i className="fas fa-arrow-left me-2"></i>Continue Shopping
-                            </a>
-                            <button type="button" className="btn btn-outline-secondary" onClick={clearCart}>
-                                <i className="fas fa-trash me-2"></i>Clear Cart
-                            </button>
+                            </div>
                         </div>
                     </div>
-                    {/* <!-- Order Summary --> */}
-                    <div className="col-lg-4 mt-4">
+
+                    {/* Order Summary Section */}
+                    <div className="col-lg-4">
                         <div className="card border-0 shadow-sm sticky-top" style={{ top: "100px" }}>
-                            <div className="card-header bg-primary text-white">
+                            <div className="card-header bg-primary text-white py-3">
                                 <h4 className="mb-0 fw-semibold">Order Summary</h4>
                             </div>
                             <div className="card-body">
-                                <div className="d-flex justify-content-between mb-3">
-                                    <span>Subtotal:</span>
-                                    <span className="fw-semibold">${subTotal.toFixed(2)}</span>
+                                <div className="mb-4">
+                                    <div className="d-flex justify-content-between mb-2">
+                                        <span>Subtotal:</span>
+                                        <span className="fw-semibold">${subTotal.toFixed(2)}</span>
+                                    </div>
+                                    <div className="d-flex justify-content-between mb-2">
+                                        <span>Tax:</span>
+                                        <span>${getTaxAmount().toFixed(2)}</span>
+                                    </div>
+                                    <div className="d-flex justify-content-between mb-2">
+                                        <span>Shipping:</span>
+                                        <span>{getShippingCost() === 0 ? 'Free' : `$${getShippingCost().toFixed(2)}`}</span>
+                                    </div>
+                                    <hr />
+                                    <div className="d-flex justify-content-between">
+                                        <span className="h5 fw-bold">Total:</span>
+                                        <span className="h5 fw-bold text-primary">${getTotalAmount().toFixed(2)}</span>
+                                    </div>
                                 </div>
-                                <div className="d-flex justify-content-between mb-3">
-                                    <span>Tax:</span>
-                                    <span>${getTaxAmount().toFixed(2)}</span>
-                                </div>
-                                <hr />
-                                <div className="d-flex justify-content-between mb-4">
-                                    <span className="h5 fw-bold">Total:</span>
-                                    <span className="h5 fw-bold text-primary">${getTotalAmount().toFixed(2)}</span>
-                                </div>
-                                {/* Enhanced Checkout Form */}
+
+                                {/* Checkout Form */}
                                 <form className="checkout-form" onSubmit={handleSubmit}>
                                     {/* Customer Information */}
-                                    <div className="checkout-section mb-4">
+                                    <div className="mb-4">
                                         <h5 className="fw-semibold mb-3 text-primary">
                                             <i className="fas fa-user me-2"></i>Customer Information
                                         </h5>
-
                                         <div className="row">
                                             <div className="col-md-6 mb-3">
-                                                <label htmlFor="customerName" className="form-label fw-semibold">
-                                                    Full Name *
-                                                </label>
+                                                <label htmlFor="customerName" className="form-label fw-semibold">Full Name *</label>
                                                 <input
                                                     type="text"
                                                     id="customerName"
@@ -297,11 +314,8 @@ ${notes ? `*Notes:* ${notes}` : ''}
                                                     required
                                                 />
                                             </div>
-
                                             <div className="col-md-6 mb-3">
-                                                <label htmlFor="email" className="form-label fw-semibold">
-                                                    Email Address *
-                                                </label>
+                                                <label htmlFor="email" className="form-label fw-semibold">Email Address *</label>
                                                 <input
                                                     type="email"
                                                     id="email"
@@ -314,11 +328,8 @@ ${notes ? `*Notes:* ${notes}` : ''}
                                                 <div className="form-text">Order confirmation will be sent here</div>
                                             </div>
                                         </div>
-
                                         <div className="mb-3">
-                                            <label htmlFor="phone" className="form-label fw-semibold">
-                                                Phone Number *
-                                            </label>
+                                            <label htmlFor="phone" className="form-label fw-semibold">Phone Number *</label>
                                             <input
                                                 type="tel"
                                                 id="phone"
@@ -333,26 +344,22 @@ ${notes ? `*Notes:* ${notes}` : ''}
                                     </div>
 
                                     {/* Shipping Information */}
-                                    <div className="checkout-section mb-4">
+                                    <div className="mb-4">
                                         <h5 className="fw-semibold mb-3 text-primary">
                                             <i className="fas fa-shipping-fast me-2"></i>Shipping Information
                                         </h5>
-
                                         <div className="mb-3">
-                                            <label htmlFor="shippingAddress" className="form-label fw-semibold">
-                                                Shipping Address *
-                                            </label>
+                                            <label htmlFor="shippingAddress" className="form-label fw-semibold">Shipping Address *</label>
                                             <textarea
                                                 id="shippingAddress"
                                                 className="form-control"
-                                                rows="3"
+                                                rows="4"
                                                 placeholder="Street address, city, province, postal code"
                                                 value={shippingAddress}
                                                 onChange={(e) => setShippingAddress(e.target.value)}
                                                 required
                                             />
                                         </div>
-
                                         <div className="form-check mb-3">
                                             <input
                                                 className="form-check-input"
@@ -365,31 +372,27 @@ ${notes ? `*Notes:* ${notes}` : ''}
                                                 Billing address is the same as shipping address
                                             </label>
                                         </div>
-
                                         {!sameAsBilling && (
                                             <div className="mb-3">
-                                                <label htmlFor="billingAddress" className="form-label fw-semibold">
-                                                    Billing Address *
-                                                </label>
+                                                <label htmlFor="billingAddress" className="form-label fw-semibold">Billing Address *</label>
                                                 <textarea
                                                     id="billingAddress"
                                                     className="form-control"
-                                                    rows="3"
+                                                    rows="4"
                                                     placeholder="Street address, city, province, postal code"
                                                     value={billingAddress}
                                                     onChange={(e) => setBillingAddress(e.target.value)}
-                                                    required={!sameAsBilling}
+                                                    required
                                                 />
                                             </div>
                                         )}
                                     </div>
 
                                     {/* Payment Method */}
-                                    <div className="checkout-section mb-4">
+                                    <div className="mb-4">
                                         <h5 className="fw-semibold mb-3 text-primary">
                                             <i className="fas fa-credit-card me-2"></i>Payment Method
                                         </h5>
-
                                         <div className="payment-methods">
                                             <div className="form-check mb-2">
                                                 <input
@@ -402,11 +405,9 @@ ${notes ? `*Notes:* ${notes}` : ''}
                                                     onChange={(e) => setPaymentMethod(e.target.value)}
                                                 />
                                                 <label className="form-check-label d-flex align-items-center" htmlFor="bank_transfer">
-                                                    <i className="fas fa-university me-2 text-primary"></i>
-                                                    Bank Transfer
+                                                    <i className="fas fa-university me-2 text-primary"></i>Bank Transfer
                                                 </label>
                                             </div>
-
                                             <div className="form-check mb-2">
                                                 <input
                                                     className="form-check-input"
@@ -418,11 +419,9 @@ ${notes ? `*Notes:* ${notes}` : ''}
                                                     onChange={(e) => setPaymentMethod(e.target.value)}
                                                 />
                                                 <label className="form-check-label d-flex align-items-center" htmlFor="cash_on_delivery">
-                                                    <i className="fas fa-money-bill-wave me-2 text-success"></i>
-                                                    Cash on Delivery
+                                                    <i className="fas fa-money-bill-wave me-2 text-success"></i>Cash on Delivery
                                                 </label>
                                             </div>
-
                                             <div className="form-check mb-2">
                                                 <input
                                                     className="form-check-input"
@@ -434,19 +433,17 @@ ${notes ? `*Notes:* ${notes}` : ''}
                                                     onChange={(e) => setPaymentMethod(e.target.value)}
                                                 />
                                                 <label className="form-check-label d-flex align-items-center" htmlFor="whatsapp_order">
-                                                    <i className="fab fa-whatsapp me-2 text-success"></i>
-                                                    WhatsApp Order (Payment arranged separately)
+                                                    <i className="fab fa-whatsapp me-2 text-success"></i>WhatsApp Order
                                                 </label>
                                             </div>
                                         </div>
                                     </div>
 
                                     {/* Shipping Options */}
-                                    <div className="checkout-section mb-4">
+                                    <div className="mb-4">
                                         <h5 className="fw-semibold mb-3 text-primary">
                                             <i className="fas fa-truck me-2"></i>Shipping Options
                                         </h5>
-
                                         <div className="shipping-options">
                                             <div className="form-check mb-2">
                                                 <input
@@ -463,7 +460,6 @@ ${notes ? `*Notes:* ${notes}` : ''}
                                                     <span className="text-success fw-semibold">Free</span>
                                                 </label>
                                             </div>
-
                                             <div className="form-check mb-2">
                                                 <input
                                                     className="form-check-input"
@@ -479,7 +475,6 @@ ${notes ? `*Notes:* ${notes}` : ''}
                                                     <span className="fw-semibold">$5.00</span>
                                                 </label>
                                             </div>
-
                                             <div className="form-check mb-2">
                                                 <input
                                                     className="form-check-input"
@@ -499,28 +494,23 @@ ${notes ? `*Notes:* ${notes}` : ''}
                                     </div>
 
                                     {/* Order Notes */}
-                                    <div className="checkout-section mb-4">
+                                    <div className="mb-4">
                                         <h5 className="fw-semibold mb-3 text-primary">
                                             <i className="fas fa-sticky-note me-2"></i>Additional Information
                                         </h5>
-
-                                        <div className="mb-3">
-                                            <label htmlFor="notes" className="form-label fw-semibold">
-                                                Order Notes (Optional)
-                                            </label>
-                                            <textarea
-                                                id="notes"
-                                                className="form-control"
-                                                rows="3"
-                                                placeholder="Any special instructions, delivery preferences, or questions..."
-                                                value={notes}
-                                                onChange={(e) => setNotes(e.target.value)}
-                                            />
-                                        </div>
+                                        <label htmlFor="notes" className="form-label fw-semibold">Order Notes (Optional)</label>
+                                        <textarea
+                                            id="notes"
+                                            className="form-control"
+                                            rows="4"
+                                            placeholder="Any special instructions, delivery preferences, or questions..."
+                                            value={notes}
+                                            onChange={(e) => setNotes(e.target.value)}
+                                        />
                                     </div>
 
                                     {/* Terms and Conditions */}
-                                    <div className="checkout-section mb-4">
+                                    <div className="mb-4">
                                         <div className="form-check">
                                             <input
                                                 className="form-check-input"
@@ -538,7 +528,7 @@ ${notes ? `*Notes:* ${notes}` : ''}
                                     </div>
 
                                     {/* Order Summary Display */}
-                                    <div className="order-summary-checkout mb-4 p-3 bg-light rounded">
+                                    <div className="bg-light p-3 rounded mb-4">
                                         <div className="d-flex justify-content-between mb-2">
                                             <span>Subtotal:</span>
                                             <span>${subTotal.toFixed(2)}</span>
@@ -559,7 +549,7 @@ ${notes ? `*Notes:* ${notes}` : ''}
                                     </div>
 
                                     {/* Submit Buttons */}
-                                    <div className="d-grid gap-2">
+                                    <div className="d-grid gap-2 mb-4">
                                         <button
                                             type="submit"
                                             className="btn btn-primary btn-lg"
@@ -567,17 +557,14 @@ ${notes ? `*Notes:* ${notes}` : ''}
                                         >
                                             {isSubmitting ? (
                                                 <>
-                                                    <i className="fas fa-spinner fa-spin me-2"></i>
-                                                    Processing Order...
+                                                    <i className="fas fa-spinner fa-spin me-2"></i>Processing Order...
                                                 </>
                                             ) : (
                                                 <>
-                                                    <i className="fas fa-check me-2"></i>
-                                                    Place Order
+                                                    <i className="fas fa-check me-2"></i>Place Order
                                                 </>
                                             )}
                                         </button>
-
                                         {paymentMethod === 'whatsapp_order' && (
                                             <button
                                                 type="button"
@@ -585,33 +572,30 @@ ${notes ? `*Notes:* ${notes}` : ''}
                                                 disabled={!isFormValid()}
                                                 onClick={handleWhatsAppOrder}
                                             >
-                                                <i className="fab fa-whatsapp me-2"></i>
-                                                Continue with WhatsApp
+                                                <i className="fab fa-whatsapp me-2"></i>Continue with WhatsApp
                                             </button>
+                                        )}
+                                        {!isFormValid() && (
+                                            <div className="alert alert-warning d-flex align-items-center">
+                                                <i className="fas fa-exclamation-triangle me-2"></i>
+                                                Please fill in all required fields and accept the terms and conditions.
+                                            </div>
                                         )}
                                     </div>
 
-                                    {/* Validation Status Display */}
-                                    {!isFormValid() && (
-                                        <div className="alert alert-warning mt-3">
-                                            <i className="fas fa-exclamation-triangle me-2"></i>
-                                            Please fill in all required fields and accept the terms and conditions.
+                                    {/* Alternative Contact Methods */}
+                                    <div className="text-center">
+                                        <p className="text-muted mb-3">Or contact us directly:</p>
+                                        <div className="d-grid gap-2">
+                                            <a href="https://wa.me/593996888655" className="btn btn-success">
+                                                <i className="fab fa-whatsapp me-2"></i>Order via WhatsApp
+                                            </a>
+                                            <a href="mailto:info@percusionecuador.com" className="btn btn-outline-primary">
+                                                <i className="fas fa-envelope me-2"></i>Email Us
+                                            </a>
                                         </div>
-                                    )}
-                                </form>
-
-                                {/* <!-- Alternative Contact Methods --> */}
-                                <div className="text-center">
-                                    <p className="text-muted mb-3">Or contact us directly:</p>
-                                    <div className="d-grid gap-2">
-                                        <a href="https://wa.me/593996888655" className="btn btn-success">
-                                            <i className="fab fa-whatsapp me-2"></i>Order via WhatsApp
-                                        </a>
-                                        <a href="mailto:info@percusionecuador.com" className="btn btn-outline-primary">
-                                            <i className="fas fa-envelope me-2"></i>Email Us
-                                        </a>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>

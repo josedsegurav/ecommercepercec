@@ -8,19 +8,19 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
                             <%= link_to root_path, class: "text-white-50 text-decoration-none" do %>
-                                <i class="fas fa-home me-1"></i>Inicio
+                                <i class="fas fa-home me-1"></i>Home
                             <% end %>
                         </li>
-                        <li class="breadcrumb-item active text-white" aria-current="page">Categorías</li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">Categories</li>
                     </ol>
                 </nav>
-                <h1 class="display-4 text-white fw-bold mb-3">Nuestras Categorías</h1>
-                <p class="text-white-50 fs-5 mb-0">Explora nuestra amplia selección de instrumentos de percusión organizados por categorías</p>
+                <h1 class="display-4 text-white fw-bold mb-3">Our Categories</h1>
+                <p class="text-white-50 fs-5 mb-0">Explore our wide selection of percussion instruments organized by category</p>
             </div>
             <div class="col-lg-4 text-end">
                 <div class="text-white">
                     <span class="display-6 fw-bold d-block"><%= @category_count %></span>
-                    <small class="opacity-75 fs-6">Categorías disponibles</small>
+                    <small class="opacity-75 fs-6">Available Categories</small>
                 </div>
             </div>
         </div>
@@ -44,7 +44,7 @@
                                     </div>
                                     <div class="text-end">
                                         <span class="badge bg-light text-primary fs-6 px-3 py-2">
-                                            <%= category.products.count %> productos
+                                            <%= category.products.count %> products
                                         </span>
                                     </div>
                                 </div>
@@ -63,14 +63,14 @@
                                     </p>
                                 <% else %>
                                     <p class="card-text text-muted mb-4">
-                                        Descubre nuestra selección de <%= category.name.downcase %> de las mejores marcas.
+                                        Discover our <%= category.name.downcase %> best brand catalog.
                                     </p>
                                 <% end %>
 
                                 <!-- Featured Products Preview -->
                                 <% if category.products.any? %>
                                     <div class="featured-products mb-4">
-                                        <h6 class="text-muted mb-3 fw-semibold">Productos destacados:</h6>
+                                        <h6 class="text-muted mb-3 fw-semibold">Featured Products:</h6>
                                         <div class="row g-2">
                                             <% category.products.limit(3).each do |product| %>
                                                 <div class="col-4">
@@ -100,7 +100,7 @@
                                 <% if category.products.any? %>
                                     <div class="price-range mb-4">
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <span class="text-muted small">Rango de precios:</span>
+                                            <span class="text-muted small">Prices Range:</span>
                                             <span class="fw-semibold text-primary">
                                                 $<%= category.products.minimum(:selling_price) %> - $<%= category.products.maximum(:selling_price) %>
                                             </span>
@@ -112,7 +112,7 @@
                                 <div class="d-grid gap-2">
                                     <%= link_to products_path(category_id: category.id),
                                         class: "btn btn-primary rounded-3" do %>
-                                        <i class="fas fa-eye me-2"></i>Ver Productos
+                                        <i class="fas fa-eye me-2"></i>Browse Products
                                     <% end %>
                                     <div class="row g-2">
                                         <div class="col-6">
@@ -125,11 +125,11 @@
                                             <% if category.products.any? %>
                                                 <%= link_to product_path(category.products.first),
                                                     class: "btn btn-outline-primary btn-sm w-100" do %>
-                                                    <i class="fas fa-star me-1"></i>Destacado
+                                                    <i class="fas fa-star me-1"></i>Featured
                                                 <% end %>
                                             <% else %>
                                                 <button class="btn btn-outline-secondary btn-sm w-100" disabled>
-                                                    <i class="fas fa-clock me-1"></i>Próximamente
+                                                    <i class="fas fa-clock me-1"></i>Coming Soon
                                                 </button>
                                             <% end %>
                                         </div>
@@ -148,10 +148,10 @@
                 <div class="mb-4">
                     <i class="fas fa-tags text-muted" style="font-size: 4rem; opacity: 0.3;"></i>
                 </div>
-                <h3 class="text-muted mb-3">No hay categorías disponibles</h3>
-                <p class="text-muted mb-4">Actualmente no hay categorías configuradas en el sistema.</p>
+                <h3 class="text-muted mb-3">No available categories</h3>
+                <p class="text-muted mb-4">There are currently no categories added in the system.</p>
                 <%= link_to root_path, class: "btn btn-primary" do %>
-                    <i class="fas fa-home me-2"></i>Volver al Inicio
+                    <i class="fas fa-home me-2"></i>Return to Home
                 <% end %>
             </div>
         <% end %>
@@ -168,7 +168,7 @@
                         <div class="h2 text-primary fw-bold mb-2">
                             <%= @category_count %>
                         </div>
-                        <p class="text-muted mb-0">Categorías</p>
+                        <p class="text-muted mb-0">Categories</p>
                     </div>
                 </div>
                 <div class="col-md-3 col-6 mb-4">
@@ -176,7 +176,7 @@
                         <div class="h2 text-primary fw-bold mb-2">
                             <%= @product_categories_count %>
                         </div>
-                        <p class="text-muted mb-0">Productos Totales</p>
+                        <p class="text-muted mb-0">Total Products</p>
                     </div>
                 </div>
                 <div class="col-md-3 col-6 mb-4">
@@ -184,13 +184,13 @@
                         <div class="h2 text-primary fw-bold mb-2">
                             <%= @vendor_categories_count %>
                         </div>
-                        <p class="text-muted mb-0">Marcas</p>
+                        <p class="text-muted mb-0">Brands</p>
                     </div>
                 </div>
                 <div class="col-md-3 col-6 mb-4">
                     <div class="stat-item">
                         <div class="h2 text-primary fw-bold mb-2">14+</div>
-                        <p class="text-muted mb-0">Años de Experiencia</p>
+                        <p class="text-muted mb-0">Years of Experience</p>
                     </div>
                 </div>
             </div>
@@ -202,7 +202,7 @@
 <% if @popular_categories&.any? %>
     <section class="py-5">
         <div class="container">
-            <h3 class="text-center mb-5">Categorías Más Populares</h3>
+            <h3 class="text-center mb-5">Popular Categories</h3>
             <div class="row g-4">
                 <% @popular_categories.each do |category| %>
                     <div class="col-lg-6">
@@ -221,11 +221,11 @@
                                                 class: "text-decoration-none text-dark" %>
                                         </h5>
                                         <p class="card-text text-muted small mb-3">
-                                            <%= category.products.count %> productos disponibles
+                                            <%= category.products.count %> available products
                                         </p>
                                         <%= link_to products_path(category_id: category.id),
                                             class: "btn btn-outline-primary btn-sm" do %>
-                                            Ver Productos <i class="fas fa-arrow-right ms-1"></i>
+                                            Browse Products <i class="fas fa-arrow-right ms-1"></i>
                                         <% end %>
                                     </div>
                                 </div>
@@ -243,8 +243,8 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-8">
-                <h3 class="mb-3">¿Necesitas ayuda para elegir?</h3>
-                <p class="mb-0 fs-5">Nuestros expertos te pueden asesorar para encontrar el instrumento perfecto según tu nivel y estilo musical.</p>
+                <h3 class="mb-3">Need Help Choosing?</h3>
+                <p class="mb-0 fs-5">Our experts can help you find the perfect instrument for your level and musical style.</p>
             </div>
             <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
                 <div class="d-flex gap-3 justify-content-lg-end">
@@ -260,19 +260,3 @@
     </div>
 </section>
 
-<script>
-
-// Smooth scroll for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-    });
-});
-</script>
