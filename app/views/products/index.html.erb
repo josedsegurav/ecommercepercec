@@ -98,10 +98,10 @@
                                 <!-- Product badges -->
                                 <div class="position-absolute top-0 start-0 m-3">
                                     <% if product.stock_quantity <= 5 %>
-                                        <span class="badge bg-warning text-dark mb-1 d-block">Few Stock</span>
+                                        <span class="badge bg-warning text-dark mb-1 d-block fs-3">Few Stock</span>
                                     <% end %>
                                     <% if product.created_at > 30.days.ago %>
-                                        <span class="badge bg-success mb-1 d-block">New</span>
+                                        <span class="badge bg-success mb-1 d-block fs-3">New</span>
                                     <% end %>
                                 </div>
 
