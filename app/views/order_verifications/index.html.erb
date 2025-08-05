@@ -1,0 +1,41 @@
+<section class="hero-section d-flex align-items-center">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-6">
+        <div class="search-card">
+          <div class="text-center mb-4">
+            <div class="search-icon d-flex align-items-center justify-content-center mx-auto mb-3">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3 class="fw-bold mb-2">Verify Your Order</h3>
+            <p class="text-muted">Please verify your email to view order details</p>
+          </div>
+
+          <div class="alert alert-info mb-4">
+            <i class="fas fa-info-circle me-2"></i>
+            Order #<%= @order.order_number || @order.id %> found. Please enter the email address used for this order.
+          </div>
+
+          <%= form_with url: verify_order_path(@order), method: :post, local: true do |form| %>
+            <div class="mb-3">
+              <%= form.label :email, "Email Address", class: "form-label fw-semibold" %>
+              <%= form.email_field :email, class: "form-control", placeholder: "Enter your email address", required: true %>
+              <div class="form-text">This should match the email you used when placing the order.</div>
+            </div>
+
+            <div class="d-grid gap-2">
+              <%= form.submit "Verify Order", class: "btn btn-primary btn-lg" %>
+            </div>
+          <% end %>
+
+          <div class="text-center mt-4">
+            <p class="text-muted mb-2">Having trouble?</p>
+            <a href="https://wa.me/593996888655" class="btn btn-outline-primary">
+              <i class="fab fa-whatsapp me-2"></i>Contact Support
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
