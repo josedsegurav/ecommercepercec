@@ -11,15 +11,9 @@ class OrdersController < InheritedResources::Base
       # Search by order number format (PE202508041065) or database ID
       if search_term.match(/^#?PE\d{12}$/i)
         # Order number format search (case insensitive)
-        order_num = search_term.gsub('#', '').upcase
-        @orders = @orders.where("UPPER(order_number) = ?", order_num)
+        order_number = search_term.gsub('#', '').upcase
+        @orders = @orders.where("UPPER(order_number) = ?", order_number)
 
-      else
-        # General search across customer name and order_number
-        @orders = @orders.where(
-          "customer_name ILIKE ? OR order_number ILIKE ? OR users.name ILIKE ?",
-          "%#{search_term}%", "%#{search_term.upcase}%", "%#{search_term}%"
-        ).left_joins(:user)
       end
 
       # Order by most recent first
