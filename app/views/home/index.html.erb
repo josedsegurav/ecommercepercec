@@ -163,9 +163,10 @@
             </div>
 
             <div class="text-center mt-5">
-                <a href="#" class="btn btn-outline-primary btn-lg">
-                    Browse All Productos <i class="fas fa-arrow-right ms-2"></i>
-                </a>
+            <%= link_to products_path, class: "btn btn-outline-primary btn-lg" do %>
+
+                     Browse All Products<i class="fas fa-arrow-right ms-2"></i>
+            <% end %>
             </div>
         </div>
     </section>
