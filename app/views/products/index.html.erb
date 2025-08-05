@@ -31,6 +31,8 @@
         <div class="row align-items-center">
             <div class="col-lg-6">
                 <%= form_with url: products_path, method: :get, local: true, class: "d-flex gap-3" do |f| %>
+                    <%= f.hidden_field :category_id, value: params[:category_id] %>
+                    <%= f.hidden_field :sort_by, value: params[:sort_by] %>
                     <div class="flex-fill">
                         <%= f.text_field :search, placeholder: "Search products...",
                             value: params[:search],
@@ -49,13 +51,14 @@
                         <%= f.hidden_field :search, value: params[:search] %>
                         <%= f.hidden_field :sort_by, value: params[:sort_by] %>
 
+
                         <%= f.select :category_id,
                             options_for_select(
                                 [["All Categories", nil]] + @categories.map { |c| [c.name, c.id] },
                                 params[:category_id]
                             ),
                             {},
-                            { class: "form-select" } %>
+                            { class: "form-select", onchange: "this.form.submit();" } %>
                     <% end %>
 
                     <%= form_with url: products_path, method: :get, local: true, class: "d-flex gap-2 align-items-center" do |f| %>
