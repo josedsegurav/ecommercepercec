@@ -4,7 +4,12 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
 
   resources :order_items
-  resources :orders
+  resources :orders, only: [:index, :show]
+  resources :order_verifications, only: [:show], path: 'orders/:id/verify', as: :verify_order do
+    member do
+      post :verify
+    end
+  end
   resources :stock_movements
   resources :products, only: [:index, :show]
   resources :vendors
