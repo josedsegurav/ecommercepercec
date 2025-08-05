@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   private
 
   def load_categories
-    @nav_categories = Category.all
+    @shared_categories = Category.all
   end
   def set_cart
     @cart_count = session[:cart]&.sum { |item| item["quantity"] } || 0
