@@ -20,7 +20,7 @@
                             Categories
                         </button>
                         <ul class="dropdown-menu">
-                        <% @shared_categories.each do |category| %>
+                        <% @shared_views_categories.each do |category| %>
                             <li>
                                 <%= link_to category_path(category), class: "dropdown-item" do %>
                                     <i class="fas fa-drum me-2"></i><%= category.name %>
