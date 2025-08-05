@@ -1,6 +1,7 @@
 ActiveAdmin.register Product do
 
   # Permit parameters including image
+
   permit_params :name, :description, :category_id, :vendor_id, :sku, :cost_price, :selling_price, :stock_quantity, :min_stock_level, :image
 
   # Customize the form to include file upload field
