@@ -5,14 +5,14 @@ ActiveAdmin.register StockMovement do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  # permit_params :product_id, :movement_type, :quantity, :cost_per_unit, :reference_id, :notes, :movement_date
+  permit_params :product_id, :movement_type, :quantity, :cost_per_unit, :reference_id, :notes, :movement_date
   #
   # or
   #
-  permit_params do
-    permitted = [:product_id, :movement_type, :quantity, :cost_per_unit, :reference_id, :notes, :movement_date]
-    permitted << :other if params[:action] == 'create' && current_user.admin?
-    permitted
-  end
+  # permit_params do
+  #   permitted = [:product_id, :movement_type, :quantity, :cost_per_unit, :reference_id, :notes, :movement_date]
+  #   permitted << :other if params[:action] == 'create' && current_user.admin?
+  #   permitted
+  # end
 
 end
