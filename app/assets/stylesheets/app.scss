@@ -1,6 +1,5 @@
 // app/assets/stylesheets/application.scss
 
-// Bootstrap Variables Override
 $primary: #0D8DC8;
 $secondary: #1BACF0;
 $info: #4DBEF3;
@@ -13,7 +12,6 @@ $brand-secondary: #1BACF0;
 $brand-accent: #4DBEF3;
 $text-color: #000000;
 
-// Bootstrap Color System Override
 $theme-colors: (
   "primary": $brand-primary,
   "secondary": $brand-secondary,
@@ -22,7 +20,7 @@ $theme-colors: (
   "light": $light
 );
 
-// Typography
+// Font
 $font-family-base: 'Poppins', sans-serif;
 $headings-font-weight: 600;
 $font-weight-bold: 700;
@@ -37,17 +35,13 @@ $box-shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.08);
 $box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
 $box-shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.15);
 
-// Import Bootstrap
 @import "bootstrap";
 
-// Custom Styles for Percussion Ecuador
 
-// Base Styles
 body {
   font-family: $font-family-base;
   color: $text-color;
   line-height: 1.6;
-  // background-color: $text-color;
 }
 
 // Custom Button Styles

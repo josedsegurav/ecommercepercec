@@ -9,7 +9,7 @@ class CartController < ApplicationController
   def add
     product = Product.find(params[:product_id])
     quantity = params[:quantity].to_i
-    quantity = 1 if quantity < 1 # fallback
+    quantity = 1 if quantity < 1
     session[:cart] ||= []
     existing_item = session[:cart].find { |i| i["product_id"] == product.id }
 
