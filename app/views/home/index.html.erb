@@ -103,8 +103,8 @@
                             <p class="card-text text-muted"><%= @low_quantity_products.description %></p>
                             <div class="h4 text-primary fw-bold mb-3">$<%= @low_quantity_products.selling_price %></div>
                             <%= button_to add_cart_index_path(@low_quantity_products), method: :post, class: "add_button btn btn-primary rounded-3" do %>
-                                      <i class="fas fa-cart-plus me-2"></i>Add to Cart
-                                      <% end %>
+                                <i class="fas fa-cart-plus me-2"></i>Add to Cart
+                            <% end %>
                         </div>
                     </div>
                 </div>
@@ -128,9 +128,9 @@
                             <h5 class="card-title fw-semibold"><%= @latest_product.name %></h5>
                             <p class="card-text text-muted"><%= @latest_product.description %></p>
                             <div class="h4 text-primary fw-bold mb-3">$<%= @latest_product.selling_price %></div>
-                            <button class="btn btn-primary w-100 rounded-3">
+                            <%= button_to add_cart_index_path(@low_quantity_products), method: :post, class: "add_button btn btn-primary rounded-3" do %>
                                 <i class="fas fa-cart-plus me-2"></i>Add to Cart
-                            </button>
+                            <% end %>
                         </div>
                     </div>
                 </div>
